@@ -8,7 +8,7 @@
 #' @param respValue numeric value of respVar defining respondents
 #' @param clustVar character string with name of clustering variable; clusters are not split across cells (e.g. schools)
 #'
-#' @return
+#' @return Input data frame is completed with two columns (nraGroup, nraCell). nraGroup contains the combinations of values in nra.sep for which separate cell splits were performed. nraCell contains the name of the nra cell.
 #' @export
 #'
 #' @examples
