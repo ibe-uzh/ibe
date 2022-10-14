@@ -4,6 +4,8 @@
 #' @param implstrat character vector containing sorting variables
 #'
 #' @return sorted input data frame
+#' @import dplyr
+#' @import forcats
 #' @export
 #'
 #' @examples
