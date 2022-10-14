@@ -21,6 +21,9 @@ nra_cells(df, nResp = 15, nra.sep, nra.sort, respVar, respValue, clustVar)
 
 \item{clustVar}{character string with name of clustering variable; clusters are not split across cells (e.g. schools)}
 }
+\value{
+Input data frame is completed with two columns (nraGroup, nraCell). nraGroup contains the combinations of values in nra.sep for which separate cell splits were performed. nraCell contains the name of the nra cell.
+}
 \description{
 Create non-response adjustment cells
 }

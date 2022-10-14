@@ -1,3 +1,14 @@
+#' Make Luhn checksums as needed for HIDs (including scan-IDs)
+#'
+#' @param x A number or character string of numbers. All characters and special characters are ignored when calculating the check sum but preserved in the output.
+#' @param HID Set `TRUE` for HID-formatted output.
+#' @param sep Separator between the original input `x` and the checksum that is appended.
+#'
+#' @return A character string pasted from the original input `x`, the separator `sep`, and the checksum.
+#' @export
+#'
+#' @examples
+
 make_luhn <- function(x, HID=TRUE, sep=ifelse(HID, "-0", "")) {
   y <- strsplit(gsub("[[:punct:]]|[[:alpha:]]", "", as.character(x) ),
                 split = "")
