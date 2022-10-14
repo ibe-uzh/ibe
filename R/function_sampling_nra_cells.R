@@ -9,6 +9,9 @@
 #' @param clustVar character string with name of clustering variable; clusters are not split across cells (e.g. schools)
 #'
 #' @return Input data frame is completed with two columns (nraGroup, nraCell). nraGroup contains the combinations of values in nra.sep for which separate cell splits were performed. nraCell contains the name of the nra cell.
+#' @import dplyr
+#' @import stringr
+#' @import rlang
 #' @export
 #'
 #' @examples
