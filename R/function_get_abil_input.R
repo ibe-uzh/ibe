@@ -1,13 +1,18 @@
-# These functions get ability-input files (input into TAM script)
-# or ability-output files (output from TAM script)
-#
-# Notes:
-# - domain: For input files, "math" is valid; for output files, "mzuv", "mfur", & "mgfd" are valid.
-# - selection: If several files are found, choose either the newest (date) or the last among sorted file names.
-# - spec_regex: The function constructs a regular expression to find the correct file(s). Provide your own regular expression here, to overrule.
-# - read_data: If TRUE (default), use readRDS and return file content; if FALSE, return file path.
-# - avoid.nz: Avoids Nachzügler files by excluding file names that contain "NZ"
-# - The paths and regex constructed should work for all ability input & output files of tests that were analyzed with TAM.
+#' Get ability-input files (input into TAM script) from IBE server
+#'
+#' @param check Check type, i.e. P3, P5, S2 or S3
+#' @param year Year of check
+#' @param domain Scale/test, e.g. "dles". "math" is vaild, but "mzuv", "mfur", & "mgfd" are *not* valid.
+#' @param selection If several files are found, choose either the newest (date) or the last among sorted file names.
+#' @param check_type `"P"` for primary school or `"S"` for secondary school, by default consistent with `check`
+#' @param spec_regex The function constructs a regular expression to find the correct file(s). Provide your own regular expression here, to overrule.
+#' @param read_data If TRUE (default), use readRDS and return file content; if FALSE, return file path.
+#' @param avoid.nz Avoids Nachzügler files by excluding file names that contain "NZ"
+#'
+#' @return If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
+#' @export
+#'
+#' @examples
 
 get_abil_input_file <- function(check, year, domain,
                                 selection = c("date", "name"),
