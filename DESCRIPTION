@@ -4,7 +4,7 @@ Title: Collection of IBE helper functions
 Version: 0.1.0
 Author: IBE
 Maintainer: Martin Verner <marti.verner@ibe.uzh.ch>
-Description: MPractical functions for everyday IBE use
+Description: Practical functions for everyday IBE use
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.1
