@@ -1,5 +1,12 @@
-############sort list by N implicit strata#####################################
-
+#' Sorts data frame by multiple (stratification) variables in a serpentine manner
+#'
+#' @param data data frame in need of some serpentine sorting
+#' @param implstrat character vector containing sorting variables
+#'
+#' @return sorted input data frame
+#' @export
+#'
+#' @examples
 serpentine_sort <- function(data, implstrat) {
   if ( !(require(dplyr) & require(forcats)) ) stop("Required packages 'dplyr' and 'forcats' not available!")
   has.na <- select(data, !!implstrat) %>%
