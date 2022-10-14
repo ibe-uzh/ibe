@@ -1,0 +1,11 @@
+Package: ibe
+Type: Package
+Title: Collection of IBE helper functions
+Version: 0.1.0
+Author: IBE
+Maintainer: Martin Verner <marti.verner@ibe.uzh.ch>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
