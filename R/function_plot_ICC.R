@@ -31,7 +31,7 @@ plot_ICC <- function(diff, disc, xlim = -5:5) {
         ~ geom_segment(aes(x = pars$diff[.x], y = 0.5, xend = pars$diff[.x], yend = 0), linetype = "dashed", color = gg_colors[.x], size = 0.1)
     ) +
     scale_y_continuous(name = 'P', limits = c(0,1)) +
-    scale_x_continuous(name = 'theta', limits = c(-5,5))
+    scale_x_continuous(name = 'theta', limits = c(min(xlim), max(xlim)))
   
   return(plot)
   

@@ -46,8 +46,8 @@ plot_IIC <- function(diff, disc, xlim = -5:5) {
     aes(x) +
     map2(info_list, gg_colors, ~ stat_function(fun = .x, color = .y)) +
     map(1:nrow(pars), ~ geom_segment(aes(x = xmax[.x], y = 0, xend = xmax[.x], yend = ymax[.x]), linetype = "dashed", color = gg_colors[.x], size = 0.1)) +
-    scale_y_continuous(name = 'info', limits = c(0,1)) +
-    scale_x_continuous(name = 'theta', limits = c(-5,5))
+    scale_y_continuous(name = 'info') +
+    scale_x_continuous(name = 'theta', limits = c(min(xlim), max(xlim)))
   
   return(plot)
   
