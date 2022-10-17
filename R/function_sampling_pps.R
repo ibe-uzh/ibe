@@ -14,7 +14,7 @@ library(stringr)
 #' @export
 #'
 #' @examples
-samplePPS <- function(df, mos, tcs, n) {
+sample_PPS <- function(df, mos, tcs, n) {
   
   frame <- df %>%
     rename(sc_smp_mos = all_of(mos)) %>%
@@ -35,8 +35,9 @@ samplePPS <- function(df, mos, tcs, n) {
     
     # add certainty clusters to certainties df
     certainties <- bind_rows(certainties, filter(frame, sc_smp_mos >= si))
-    # remove certainty clusters from frame
-    frame <- filter(frame, sc_smp_mos < si)
+    # remove certainty clusters from frame and recalculate cummos
+    frame <- filter(frame, sc_smp_mos < si) %>%
+      mutate(sc_smp_cum_mos = cumsum(sc_smp_mos))
     # redefine number of elements to sample
     n <- n-tcs*nrow(certainties)
     # redefine number of clusters to sample
@@ -103,9 +104,9 @@ samplePPS <- function(df, mos, tcs, n) {
     # if there's an replacement school
     if(!is.na(repVec[i])) {
       # id for replacement school
-      frame[frame$smp_ln == repVec[i], "id_school"] <- i + 300
+      frame[frame$smp_ln == repVec[i], "id_school"] <- as.character(i + 300)
       # assing replacement to sampled school
-      frame[frame$smp_ln == sampVec[i], "id_rep_sc"] <- i + 300
+      frame[frame$smp_ln == sampVec[i], "id_rep_sc"] <- as.character(i + 300)
       # assing sampled to replacement school
       frame[frame$smp_ln == repVec[i], "id_rep_sc_for"] <- str_pad(i, 3, "left", pad = "0")
      }
