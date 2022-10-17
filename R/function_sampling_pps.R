@@ -1,6 +1,3 @@
-library(dplyr)
-library(stringr)
-
 #' Select PPS-Sample of clusters
 #'
 #' @param df Stratified data frame with clusters and corresponding MOS (measures of size) 
