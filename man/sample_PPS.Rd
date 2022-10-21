@@ -4,7 +4,7 @@
 \alias{sample_PPS}
 \title{Select PPS-Sample of clusters}
 \usage{
-sample_PPS(df, mos, tcs, n)
+sample_PPS(df, mos, tcs, n, undersampling = FALSE)
 }
 \arguments{
 \item{df}{Stratified data frame with clusters and corresponding MOS (measures of size)}
@@ -13,7 +13,9 @@ sample_PPS(df, mos, tcs, n)
 
 \item{tcs}{Target cluster size}
 
-\item{n}{Total number of elements (in clusters) to sample}
+\item{n}{Total number of clusters to sample}
+
+\item{undersampling}{Logical: If TRUE, very small and tiny schools are undersampled by factor 2 and 4}
 }
 \value{
 Input data frame is completed with columns containing sampling information. Selected schools are flagged by sc_smp_selected.

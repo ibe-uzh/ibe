@@ -3,7 +3,8 @@
 #' @param df Stratified data frame with clusters and corresponding MOS (measures of size) 
 #' @param mos Column name containing MOS (measure of size)
 #' @param tcs Target cluster size
-#' @param n Total number of elements (in clusters) to sample
+#' @param n Total number of clusters to sample
+#' @param undersampling Logical: If TRUE, very small and tiny schools are undersampled by factor 2 and 4
 #'
 #' @return Input data frame is completed with columns containing sampling information. Selected schools are flagged by sc_smp_selected.
 #' @import dplyr
@@ -11,17 +12,23 @@
 #' @export
 #'
 #' @examples
-sample_PPS <- function(df, mos, tcs, n) {
+sample_PPS <- function(df, mos, tcs, n, undersampling = FALSE) {
   
   frame <- df %>%
     rename(sc_smp_mos = all_of(mos)) %>%
     mutate(
+      sc_smp_mos = case_when(
+        !undersampling ~ ifelse(sc_smp_mos < tcs, tcs, sc_smp_mos),
+        undersampling & sc_smp_mos >= tcs/2 ~ sc_smp_mos,
+        undersampling & sc_smp_mos < tcs/2 & sc_smp_mos >= tcs/4 ~ tcs/2,
+        undersampling & sc_smp_mos < tcs/4 ~ tcs/4
+      ),
       sc_smp_cum_mos = cumsum(sc_smp_mos),
       tempId = row_number()
       )
-  
+
   # number of clusters to sample in stratum
-  nClust <- n/tcs
+  nClust <- n
   
   # define sampling interval
   si <- sum(frame$sc_smp_mos)/nClust
@@ -35,10 +42,8 @@ sample_PPS <- function(df, mos, tcs, n) {
     # remove certainty clusters from frame and recalculate cummos
     frame <- filter(frame, sc_smp_mos < si) %>%
       mutate(sc_smp_cum_mos = cumsum(sc_smp_mos))
-    # redefine number of elements to sample
-    n <- n-tcs*nrow(certainties)
     # redefine number of clusters to sample
-    nClust <- n/tcs
+    nClust <- nClust - nrow(certainties)
     # redefine sampling interval
     si <- sum(frame$sc_smp_mos)/nClust
     
@@ -128,7 +133,8 @@ sample_PPS <- function(df, mos, tcs, n) {
   # rbind frame and certainties again, add sampling variables and do inititial sort
   df2 <- bind_rows(frame, certainties) %>%
     arrange(tempId) %>%
-    select(-tempId)
+    select(-tempId) %>%
+    rename(!!mos := sc_smp_mos)
   
   return(df2)
   
