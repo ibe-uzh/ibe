@@ -4,14 +4,14 @@
 \alias{sample_PPS}
 \title{Select PPS-Sample of clusters}
 \usage{
-sample_PPS(df, mos, tcs, n, undersampling = FALSE)
+sample_PPS(df, enrVar, tcs, n, undersampling = FALSE)
 }
 \arguments{
-\item{df}{Stratified data frame with clusters and corresponding MOS (measures of size)}
+\item{df}{Stratified data frame with clusters and (estimated) elements per cluster}
 
-\item{mos}{Column name containing MOS (measure of size)}
+\item{enrVar}{Character string with name of column containing student enrollment number}
 
-\item{tcs}{Target cluster size}
+\item{tcs}{Numeric target cluster size}
 
 \item{n}{Total number of clusters to sample}
 
