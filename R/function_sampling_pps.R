@@ -1,8 +1,8 @@
 #' Select PPS-Sample of clusters
 #'
-#' @param df Stratified data frame with clusters and corresponding MOS (measures of size) 
-#' @param mos Column name containing MOS (measure of size)
-#' @param tcs Target cluster size
+#' @param df Stratified data frame with clusters and (estimated) elements per cluster
+#' @param enrVar Character string with name of column containing student enrollment number
+#' @param tcs Numeric target cluster size
 #' @param n Total number of clusters to sample
 #' @param undersampling Logical: If TRUE, very small and tiny schools are undersampled by factor 2 and 4
 #'
@@ -12,10 +12,10 @@
 #' @export
 #'
 #' @examples
-sample_PPS <- function(df, mos, tcs, n, undersampling = FALSE) {
+sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE) {
   
   frame <- df %>%
-    rename(sc_smp_mos = all_of(mos)) %>%
+    rename(sc_smp_mos = all_of(enrVar)) %>%
     mutate(
       sc_smp_mos = case_when(
         !undersampling ~ ifelse(sc_smp_mos < tcs, tcs, sc_smp_mos),
@@ -134,7 +134,9 @@ sample_PPS <- function(df, mos, tcs, n, undersampling = FALSE) {
   df2 <- bind_rows(frame, certainties) %>%
     arrange(tempId) %>%
     select(-tempId) %>%
-    rename(!!mos := sc_smp_mos)
+    mutate(sc_smp_mos2 = sc_smp_mos) %>%
+    rename(!!enrVar := sc_smp_mos) %>%
+    rename(sc_smp_mos = sc_smp_mos2)
   
   return(df2)
   
