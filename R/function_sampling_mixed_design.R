@@ -128,7 +128,7 @@ sample_PPS2 <- function(df, enrVar, tcs, n) {
   # vector with line numbers of sampled schools
   sampVec <- NULL
   for(i in 1:length(sln)) {
-    ln <- sum(mFrame$smp_cummos <= sln[i])
+    ln <- which(mFrame$smp_cummos > sln[i])[1]
     sampVec <- c(sampVec, ln)
   }
   
@@ -185,7 +185,7 @@ sample_PPS2 <- function(df, enrVar, tcs, n) {
                    sc_smp_scweight = round(1/sc_smp_scselprob, 4)
   )
   
-  # STRATUM 3 - All schools in sampled
+  # STRATUM 3 - All schools in sample
   
   # id start after ids for sampled schools in small stratum
   plusId <- max(as.numeric(str_sub(mFrame$id_school, 2, 3)), na.rm = TRUE)
@@ -203,8 +203,12 @@ sample_PPS2 <- function(df, enrVar, tcs, n) {
   frame <- bind_rows(sFrame, mFrame, lFrame) %>%
     mutate(sc_npop_pre2 = sc_npop_pre) %>%
     rename(!!enrVar := sc_npop_pre) %>%
-    rename(sc_npop_pre = sc_npop_pre2)
-  
-  return(frame)
+    rename(sc_npop_pre = sc_npop_pre2) %>%
+    mutate(nStudents = case_when(
+      stratum == 1 ~ sc_npop_pre,
+      stratum == 2 ~ tcs,
+      stratum == 3 ~ ceiling(p*sc_npop_pre)
+    ))
 
+  
 }

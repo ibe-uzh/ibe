@@ -66,7 +66,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE) {
   # vector with line numbers of sampled schools
   sampVec <- NULL
   for(i in 1:length(sln)) {
-    ln <- sum(frame$sc_smp_cum_mos <= sln[i])
+    ln <- which(frame$sc_smp_cum_mos > sln[i])[1]
     sampVec <- c(sampVec, ln)
   }
   
@@ -78,7 +78,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE) {
     if(!(repVec[i] + 1) %in% sampVec & (repVec[i] + 1) <= max(frame$smp_ln)) {
       repVec[i] <- (repVec[i] + 1) 
     } else {
-      # else check if last school not in sampVec or repVec and not below 1
+      # else check if previous school not in sampVec or repVec and not below 1
       if(!(repVec[i] - 1) %in% sampVec & !(repVec[i] - 1) %in% repVec & (repVec[i] - 1) >= 1) {
         repVec[i] <- (repVec[i] - 1)
       } else {
