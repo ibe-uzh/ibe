@@ -106,15 +106,15 @@ sample_PPS2 <- function(df, enrVar, tcs, n) {
     mutate(
       smp_ln = row_number(),
       sc_smp_scselprob = round(p * sc_npop_pre / tcs, 4),
-      smp_mos = sc_npop_pre,
-      smp_cummos = cumsum(smp_mos)
+      sc_smp_mos = sc_npop_pre,
+      sc_smp_cum_mos = cumsum(sc_smp_mos)
       )
   
   # number of schools to sample
   nMedium <- round(sum(mFrame$sc_smp_scselprob), 0)
   
   # define sampling interval
-  si <- sum(mFrame$smp_mos)/nMedium
+  si <- sum(mFrame$sc_smp_mos)/nMedium
   
   # define random start
   rs <- runif(1, 0, si)
@@ -128,7 +128,7 @@ sample_PPS2 <- function(df, enrVar, tcs, n) {
   # vector with line numbers of sampled schools
   sampVec <- NULL
   for(i in 1:length(sln)) {
-    ln <- which(mFrame$smp_cummos > sln[i])[1]
+    ln <- which(mFrame$sc_smp_cum_mos > sln[i])[1]
     sampVec <- c(sampVec, ln)
   }
   
