@@ -4,7 +4,7 @@
 \alias{sample_PPS}
 \title{Select PPS-Sample of clusters}
 \usage{
-sample_PPS(df, enrVar, tcs, n, undersampling = FALSE)
+sample_PPS(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1)
 }
 \arguments{
 \item{df}{Stratified data frame with clusters and (estimated) elements per cluster}
@@ -16,6 +16,8 @@ sample_PPS(df, enrVar, tcs, n, undersampling = FALSE)
 \item{n}{Total number of clusters to sample}
 
 \item{undersampling}{Logical: If TRUE, very small and tiny schools are undersampled by factor 2 and 4}
+
+\item{idStart}{Numeric at which identificators of selected clusters start.}
 }
 \value{
 Input data frame is completed with columns containing sampling information. Selected schools are flagged by sc_smp_selected.

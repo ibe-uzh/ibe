@@ -5,6 +5,7 @@
 #' @param tcs Numeric target cluster size
 #' @param n Total number of clusters to sample
 #' @param undersampling Logical: If TRUE, very small and tiny schools are undersampled by factor 2 and 4
+#' @param idStart Numeric at which identificators of selected clusters start.
 #'
 #' @return Input data frame is completed with columns containing sampling information. Selected schools are flagged by sc_smp_selected.
 #' @import dplyr
@@ -12,7 +13,7 @@
 #' @export
 #'
 #' @examples
-sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE) {
+sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
   
   frame <- df %>%
     rename(sc_smp_mos = all_of(enrVar)) %>%
@@ -102,15 +103,15 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE) {
   frame$id_rep_sc_for <- NA
   for(i in 1:length(sampVec)) {
     # id for sampled schools
-    frame[frame$smp_ln == sampVec[i], "id_school"] <- str_pad(i, 3, "left", pad = "0")
+    frame[frame$smp_ln == sampVec[i], "id_school"] <- str_pad(idStart + i - 1, 3, "left", pad = "0")
     # if there's an replacement school
     if(!is.na(repVec[i])) {
       # id for replacement school
-      frame[frame$smp_ln == repVec[i], "id_school"] <- as.character(i + 300)
+      frame[frame$smp_ln == repVec[i], "id_school"] <- as.character(idStart + i - 1 + 300)
       # assing replacement to sampled school
-      frame[frame$smp_ln == sampVec[i], "id_rep_sc"] <- as.character(i + 300)
+      frame[frame$smp_ln == sampVec[i], "id_rep_sc"] <- as.character(idStart + i - 1 + 300)
       # assing sampled to replacement school
-      frame[frame$smp_ln == repVec[i], "id_rep_sc_for"] <- str_pad(i, 3, "left", pad = "0")
+      frame[frame$smp_ln == repVec[i], "id_rep_sc_for"] <- str_pad(idStart + i - 1, 3, "left", pad = "0")
      }
   }
   
@@ -123,7 +124,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE) {
                   )
 
   # ids for certainties  
-  certainties$id_school <- str_pad((length(sampVec)+1):(length(sampVec) + nrow(certainties)), 3, "left", pad = "0")
+  certainties$id_school <- str_pad((length(sampVec) + idStart):(length(sampVec) + nrow(certainties) + idStart), 3, "left", pad = "0")
   
   # add samp vars to certainties
   certainties <- mutate(certainties,
