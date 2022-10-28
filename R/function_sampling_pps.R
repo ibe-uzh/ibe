@@ -123,8 +123,10 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
                   sc_smp_scweight = round(1/sc_smp_scselprob, 4)
                   )
 
-  # ids for certainties  
-  certainties$id_school <- str_pad((length(sampVec) + idStart):(length(sampVec) + nrow(certainties) + idStart), 3, "left", pad = "0")
+  # ids for certainties
+  start <- as.numeric(max(str_sub(frame$id_school, 2, 3), na.rm = TRUE)) + 1
+  end <- start + nrow(certainties) - 1
+  certainties$id_school <- str_pad(start:end, 3, "left", pad = "0")
   
   # add samp vars to certainties
   certainties <- mutate(certainties,
