@@ -18,6 +18,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
   frame <- df %>%
     rename(sc_smp_mos = all_of(enrVar)) %>%
     mutate(
+      sc_npop_pre = sc_smp_mos,
       sc_smp_mos = case_when(
         !undersampling ~ ifelse(sc_smp_mos < tcs, tcs, sc_smp_mos),
         undersampling & sc_smp_mos >= tcs/2 ~ sc_smp_mos,
@@ -139,7 +140,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
     arrange(tempId) %>%
     select(-tempId) %>%
     mutate(sc_smp_mos2 = sc_smp_mos) %>%
-    rename(!!enrVar := sc_smp_mos) %>%
+    rename(!!enrVar := sc_npop_pre) %>%
     rename(sc_smp_mos = sc_smp_mos2)
   
   return(df2)
