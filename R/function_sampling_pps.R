@@ -139,9 +139,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
   df2 <- bind_rows(frame, certainties) %>%
     arrange(tempId) %>%
     select(-tempId) %>%
-    mutate(sc_smp_mos2 = sc_smp_mos) %>%
-    rename(!!enrVar := ENR) %>%
-    rename(sc_smp_mos = sc_smp_mos2)
+    rename(!!enrVar := ENR)
   
   return(df2)
   
