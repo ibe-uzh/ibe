@@ -6,5 +6,6 @@ Author: IBE
 Maintainer: Martin Verner <marti.verner@ibe.uzh.ch>
 Description: Practical functions for everyday IBE use
 Encoding: UTF-8
+License: use_mit_license()
 LazyData: true
 RoxygenNote: 7.2.1
