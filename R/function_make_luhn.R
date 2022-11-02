@@ -10,17 +10,22 @@
 #' @examples
 
 make_luhn <- function(x, HID=TRUE, sep=ifelse(HID, "-0", "")) {
-  y <- strsplit(gsub("[[:punct:]]|[[:alpha:]]", "", as.character(x) ),
-                split = "")
-  y <- as.numeric(unlist(y))
-  if (length(y) < 2) stop("ERROR: Cannot make checksum for numbers of less than 2 digits.")
-  if (length(y) %% 2 == 0) {
-    i1 <- (1:(length(y)/2))*2
-  } else {
-    i1 <- (1:ceiling(length(y)/2))*2-1
+  makel <- function(x1) {
+    if (is.na(x1)) return(NA_character_)
+    y <- strsplit(gsub("[[:punct:]]|[[:alpha:]]", "", as.character(x1) ),
+                  split = "")
+    y <- as.numeric(unlist(y))
+    if (length(y) < 2) stop("ERROR: Cannot make checksum for numbers of less than 2 digits.")
+    if (length(y) %% 2 == 0) {
+      i1 <- (1:(length(y)/2))*2
+    } else {
+      i1 <- (1:ceiling(length(y)/2))*2-1
+    }
+    y[i1] <- y[i1]*2
+    y <- ifelse(y > 9, y-9, y)
+    cs <- (sum(y)*9) %% 10
+    return(paste0(x1,sep,cs))
   }
-  y[i1] <- y[i1]*2
-  y <- ifelse(y > 9, y-9, y)
-  cs <- (sum(y)*9) %% 10
-  paste0(x,sep,cs)
-} 
+  if (length(x)==0) return(NA_character_)
+  if (length(x) > 0) sapply(x, makel) else makel(x)
+}
