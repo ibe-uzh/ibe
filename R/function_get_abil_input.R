@@ -87,7 +87,7 @@ get_abil_input_file <- function(check, year, domain,
                                         date = files$mtime,
                                         name = rownames(file)),
                                  decreasing = TRUE)]
-  if (avoid.nz) afile <- afile[!grepl("NZ", rownames(files)),]
+  if (avoid.nz) afile <- afile[!grepl("NZ", rownames(files))]
   
   # if newest is not RDS, take next same-named file, if that does not work, exit with error message
   repeat {
