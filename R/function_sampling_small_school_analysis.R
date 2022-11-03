@@ -69,9 +69,9 @@ ssa <- function(df, enrVar, tcs, n) {
   minNormal <- round(schoolSampleSize * L * filter(smallSchoolAnalysis, schoolSize == "normal") %>% pull(pStudents), digits = 0)
   minSmall <- round(n * L *  filter(smallSchoolAnalysis, schoolSize == "small") %>% pull(pStudents)/
             filter(smallSchoolAnalysis, schoolSize == "small") %>% pull(menr), digits = 0)
-  minVerySmall <- round(n * L *  filter(smallSchoolAnalysis, schoolSize == "very small") %>% pull(pStudents)/
+  minVerySmall <- round(n/2 * L *  filter(smallSchoolAnalysis, schoolSize == "very small") %>% pull(pStudents)/
             filter(smallSchoolAnalysis, schoolSize == "very small") %>% pull(menr), digits = 0)
-  minTiny <- round(n * L *  filter(smallSchoolAnalysis, schoolSize == "tiny") %>% pull(pStudents)/
+  minTiny <- round(n/4 * L *  filter(smallSchoolAnalysis, schoolSize == "tiny") %>% pull(pStudents)/
             filter(smallSchoolAnalysis, schoolSize == "tiny") %>% pull(menr), digits = 0)
   
   if(!increase) {
