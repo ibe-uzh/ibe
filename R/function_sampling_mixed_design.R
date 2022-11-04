@@ -14,7 +14,8 @@
 sample_PPS2 <- function(df, enrVar, tcs, n) {
   
   frame <- df %>%
-    rename(sc_npop_pre = all_of(enrVar))
+    rename(sc_npop_pre = all_of(enrVar)) %>%
+    mutate(sc_npop_pre = as.numeric(sc_npop_pre))
   
   # get sampling fraction
   p <- n/sum(frame$sc_npop_pre)
@@ -201,14 +202,15 @@ sample_PPS2 <- function(df, enrVar, tcs, n) {
   
   # rbind the 3 strata again
   frame <- bind_rows(sFrame, mFrame, lFrame) %>%
-    mutate(sc_npop_pre2 = sc_npop_pre) %>%
-    rename(!!enrVar := sc_npop_pre) %>%
-    rename(sc_npop_pre = sc_npop_pre2) %>%
     mutate(nStudents = case_when(
       stratum == 1 ~ sc_npop_pre,
       stratum == 2 ~ tcs,
       stratum == 3 ~ ceiling(p*sc_npop_pre)
-    ))
+    )) %>%
+    # mutate(sc_npop_pre2 = sc_npop_pre) %>%
+    rename(!!enrVar := sc_npop_pre)
+    # rename(sc_npop_pre = sc_npop_pre2) 
+
 
   
 }
