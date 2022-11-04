@@ -46,7 +46,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
     frame <- filter(frame, sc_smp_mos < si) %>%
       mutate(sc_smp_cum_mos = cumsum(sc_smp_mos))
     # redefine number of clusters to sample
-    nClust <- nClust - nrow(certainties)
+    nClust <- n - nrow(certainties)
     # redefine sampling interval
     si <- sum(frame$sc_smp_mos)/nClust
     
