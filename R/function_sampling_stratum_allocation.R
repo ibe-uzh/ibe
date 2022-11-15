@@ -19,7 +19,7 @@ strata_allocation <- function(df, n, stratVar, enrVar, varVec) {
            stratum = all_of(stratVar))
   
   # available strata
-  strata <- unique(frame$stratum)
+  strata <- sort(unique(frame$stratum))
   
   # check number of strata and varVec length
   if(length(strata) != length(varVec)) stop("Number of strata does not correspond to number of variances entered")

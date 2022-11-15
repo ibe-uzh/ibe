@@ -21,7 +21,8 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
       ENR = sc_smp_mos,
       sc_smp_mos = case_when(
         !undersampling ~ ifelse(sc_smp_mos < tcs, tcs, sc_smp_mos),
-        undersampling & sc_smp_mos >= tcs/2 ~ sc_smp_mos,
+        undersampling & sc_smp_mos >= tcs ~ sc_smp_mos,
+        undersampling & sc_smp_mos < tcs & sc_smp_mos >= tcs/2 ~ tcs,
         undersampling & sc_smp_mos < tcs/2 & sc_smp_mos >= tcs/4 ~ tcs/2,
         undersampling & sc_smp_mos < tcs/4 ~ tcs/4
       ),
@@ -45,7 +46,7 @@ sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
     frame <- filter(frame, sc_smp_mos < si) %>%
       mutate(sc_smp_cum_mos = cumsum(sc_smp_mos))
     # redefine number of clusters to sample
-    nClust <- nClust - nrow(certainties)
+    nClust <- n - nrow(certainties)
     # redefine sampling interval
     si <- sum(frame$sc_smp_mos)/nClust
     
