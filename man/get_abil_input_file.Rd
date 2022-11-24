@@ -12,7 +12,8 @@ get_abil_input_file(
   check_type = substr(toupper(check), 1, 1),
   spec_regex = NULL,
   read_data = TRUE,
-  avoid.nz = TRUE
+  avoid.nz = TRUE,
+  avoid.res = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ get_abil_input_file(
 \item{read_data}{If TRUE (default), use readRDS and return file content; if FALSE, return file path.}
 
 \item{avoid.nz}{Avoids Nachzügler files by excluding file names that contain "NZ"}
+
+\item{avoid.res}{Avoids Forschung files by excluding file names that contain "forsch" or "rese"}
 }
 \value{
 If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
