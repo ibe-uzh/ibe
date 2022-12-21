@@ -26,7 +26,11 @@
 #' @import NCmisc
 #' @import stringr
 #' @name package_usage
+<<<<<<< HEAD
 #' @export
+=======
+
+>>>>>>> b9ceb510df65911a9731e3520ffff89afaaa1b3c
 package_usage <- function(scriptfile, extensive=FALSE) {
   
   script <- readLines(con = scriptfile)
