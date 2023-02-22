@@ -8,7 +8,7 @@
 #' @param spec_regex The function constructs a regular expression to find the correct file(s). Provide your own regular expression here, to overrule.
 #' @param read_data If TRUE (default), use readRDS and return file content; if FALSE, return file path.
 #' @param avoid.nz Avoids Nachzügler files by excluding file names that contain "NZ"
-#' @param avoid.res Avoids Forschung files by excluding file names that contain "forsch" or "rese"
+#' @param avoid.res Avoids Forschung files by excluding file names that contain "forsch" or "rese". If FALSE, research files are preferred!
 #'
 #' @return If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
 #' @export
@@ -86,10 +86,11 @@ get_abil_input_file <- function(check, year, domain,
   
   afile <- rownames(files)[order(switch(selection[1],
                                         date = files$mtime,
-                                        name = rownames(file)),
+                                        name = rownames(files)),
                                  decreasing = TRUE)]
-  if (avoid.nz) afile <- afile[!grepl("NZ", rownames(files), ignore.case = TRUE)]
-  if (avoid.res) afile <- afile[!grepl("(forsch|rese)", rownames(files), ignore.case = TRUE)]
+  if (avoid.nz) afile <- afile[!grepl("NZ", afile, ignore.case = TRUE)]
+  if (avoid.res) afile <- afile[!grepl("(forsch|rese)", afile, ignore.case = TRUE)]
+  if (!avoid.res & any(grepl("(forsch|rese)", afile, ignore.case = TRUE))) afile <- grep("(forsch|rese)", afile, ignore.case = TRUE, value=TRUE)[1]
   
   # if newest is not RDS, take next same-named file, if that does not work, exit with error message
   repeat {
