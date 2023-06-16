@@ -33,7 +33,7 @@ get_abil_input_file(
 
 \item{avoid.nz}{Avoids Nachzügler files by excluding file names that contain "NZ"}
 
-\item{avoid.res}{Avoids Forschung files by excluding file names that contain "forsch" or "rese"}
+\item{avoid.res}{Avoids Forschung files by excluding file names that contain "forsch" or "rese". If FALSE, research files are preferred!}
 }
 \value{
 If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
