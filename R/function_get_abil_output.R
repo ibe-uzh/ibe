@@ -85,7 +85,7 @@ get_abil_output_file <- function(check, year, domain,
   
   afile <- rownames(files)[order(switch(selection[1],
                                         date = files$mtime,
-                                        name = rownames(file)),
+                                        name = rownames(files)),
                                  decreasing = TRUE)]
   if (avoid.nz) afile <- afile[!grepl("NZ", rownames(files))]
   
