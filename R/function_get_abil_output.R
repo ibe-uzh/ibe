@@ -46,8 +46,8 @@ get_abil_output_file <- function(check, year, domain,
       subjfolder <- ifelse(substr(domain,1,1)=="m", "math", domain)
     } else {
       subjfolder <- switch(substr(domain, 1, 1), d = "Deutsch", e = "Englisch", f = "Franzoesisch", m = c("Mathematik", "Mathe"), n = "Natw")
+      if (is_schreib) subjfolder <- paste0(subjfolder, "_Schreiben")
     }
-    if (is_schreib) subjfolder <- paste0(subjfolder, "_Schreiben")
     dirpath <- paste0(srvpath,"IBE_Projekte/Checks/Checks_",year,"/Check_",check,"/Auswertung/",subjfolder,"/Daten")
     if (length(dirpath) > 1) dirpath[which(sapply(dirpath, dir.exists))]
     
