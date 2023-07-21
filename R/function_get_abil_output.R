@@ -42,14 +42,18 @@ get_abil_output_file <- function(check, year, domain,
   if (check_type == "P") {
     
     # make path to abils directory
-    subjfolder <- switch(substr(domain, 1, 1), d = "Deutsch", e = "Englisch", f = "Franzoesisch", m = c("Mathematik", "Mathe"), n = "Natw")
+    if (check_type == "P5" & year >= 2023) { # no subjectfolders for hybrid P5-checks, so subjectfolder==domain
+      subjfolder <- domain
+    } else {
+      subjfolder <- switch(substr(domain, 1, 1), d = "Deutsch", e = "Englisch", f = "Franzoesisch", m = c("Mathematik", "Mathe"), n = "Natw")
+    }
     if (is_schreib) subjfolder <- paste0(subjfolder, "_Schreiben")
     dirpath <- paste0(srvpath,"IBE_Projekte/Checks/Checks_",year,"/Check_",check,"/Auswertung/",subjfolder,"/Daten")
     if (length(dirpath) > 1) dirpath[which(sapply(dirpath, dir.exists))]
     
     # make file name regex
     if (is.null(spec_regex)) {
-      if (subjfolder[1] == "Mathematik") {
+      if (subjfolder[1] %in% c("Mathematik", "math") ) {
         file_rx <- paste0("math_(P|p)",substr(check,2,2),"_",year,"_Abils_",domain)
       } else {
         file_rx <- paste0(domain,"_(P|p)",substr(check,2,2),"_",year,"_Abils")
