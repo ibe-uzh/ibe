@@ -42,7 +42,7 @@ get_abil_output_file <- function(check, year, domain,
   if (check_type == "P") {
     
     # make path to abils directory
-    if (check_type == "P5" & year >= 2023) { # no subjectfolders for hybrid P5-checks, so subjectfolder==domain
+    if (check == "P5" & as.numeric(year) >= 2023 ) { # no subjectfolders for hybrid P5-checks, so subjectfolder==domain
       subjfolder <- domain
     } else {
       subjfolder <- switch(substr(domain, 1, 1), d = "Deutsch", e = "Englisch", f = "Franzoesisch", m = c("Mathematik", "Mathe"), n = "Natw")
