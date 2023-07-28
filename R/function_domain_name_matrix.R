@@ -7,7 +7,8 @@
 #' @param stop.when.unknown Logical, whether to stop with an error when one or several values of x are invalid. If `FALSE` (default), warnings are given for unknown domains or competence areas.
 #'
 #' @return A character vector of the same length as x, potentially including new `NA`s.
-#' @export
+#' @export domain_name2mx
+#' @export domain_mx2name
 #'
 
 domain_name2mx <- function(x, stop.when.unknown = FALSE) {
