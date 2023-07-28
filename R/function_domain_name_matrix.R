@@ -7,11 +7,10 @@
 #' @param stop.when.unknown Logical, whether to stop with an error when one or several values of x are invalid. If `FALSE` (default), warnings are given for unknown domains or competence areas.
 #'
 #' @return A character vector of the same length as x, potentially including new `NA`s.
-#' @export domain_name2mx
-#' @export domain_mx2name
-#'
-
-domain_name2mx <- function(x, stop.when.unknown = FALSE) {
+#' 
+#' @export 
+domain_name2mx <- function(x, stop.when.unknown = FALSE)
+  {
   if (!is.character(x)) stop("x must be a character vector")
   x <- tolower(x)
   subj <- substring(x, 1, 1)
@@ -43,7 +42,9 @@ domain_name2mx <- function(x, stop.when.unknown = FALSE) {
   return(y)
 }
 
-domain_mx2name <- function(x, stop.when.unknown = FALSE) {
+#' @export 
+domain_mx2name <- function(x, stop.when.unknown = FALSE)
+  {
   x <- strsplit(toupper(x),
                 split = ".", fixed = TRUE)
   mx1 <- sapply(x,
