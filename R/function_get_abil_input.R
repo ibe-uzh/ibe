@@ -32,7 +32,7 @@ get_abil_input_file <- function(check, year, domain,
   if (! check %in% valid_checks) stop("Check must be one of the following:\n", paste(valid_checks, collapse=", ") )
   if (! check_type %in% c("P", "S")) stop("Only check types P and S are implemented")
   if (! year %in% 2013:2099) stop(year," is not a valid year.")
-  if (is.null(hybrid) & check_type == "P" & year >= 2023) stop("`hybrid` must be specified for P5 Checks in 2023 or later.")
+  if (is.null(hybrid) & check_type == "P" & year >= 2023 & !grepl("sch", domain)) stop("`hybrid` must be specified for P5 Checks in 2023 or later.")
   if (! hybrid[1] %in% c("paper", "online", "computer")) {
     stop("`hybrid` must be 'paper' or 'online'")
   } else {
@@ -68,7 +68,7 @@ get_abil_input_file <- function(check, year, domain,
         file_rx <- paste0("((P|p)",substr(check,2,2),"_",domain,"|",domain,"_(P|p)",substr(check,2,2),")_",year,"_TAM")
       } else {
         file_rx <- paste0(domain,"_(P|p)",substr(check,2,2),"_","[[:digit:]]{2}",year_short,"_abils")
-        if (year >= 2023 & hybrid == "paper") file_rx <- sub("abils", "?(paper)_abils", file_rx) # select paper vs online abils input file for hybrid P5-checks
+        if (year >= 2023 & hybrid == "paper" & avoid.res) file_rx <- sub("abils", "?(paper)_abils", file_rx) # select paper vs online abils input file for hybrid P5-checks
         if (year >= 2023 & hybrid == "online") file_rx <- sub("abils", "ABILS", file_rx)
       }
     } else file_rx <- spec_regex

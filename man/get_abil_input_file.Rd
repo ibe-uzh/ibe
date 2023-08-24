@@ -13,7 +13,8 @@ get_abil_input_file(
   spec_regex = NULL,
   read_data = TRUE,
   avoid.nz = TRUE,
-  avoid.res = TRUE
+  avoid.res = TRUE,
+  hybrid = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ get_abil_input_file(
 \item{avoid.nz}{Avoids Nachzügler files by excluding file names that contain "NZ"}
 
 \item{avoid.res}{Avoids Forschung files by excluding file names that contain "forsch" or "rese". If FALSE, research files are preferred!}
+
+\item{hybrid}{Get ability data from paper-pencil ("paper") or online ("online") test? Only relevant for Check P5 as of 2023.}
 }
 \value{
 If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
