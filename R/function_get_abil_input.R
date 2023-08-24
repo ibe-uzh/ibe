@@ -9,6 +9,7 @@
 #' @param read_data If TRUE (default), use readRDS and return file content; if FALSE, return file path.
 #' @param avoid.nz Avoids Nachzügler files by excluding file names that contain "NZ"
 #' @param avoid.res Avoids Forschung files by excluding file names that contain "forsch" or "rese". If FALSE, research files are preferred!
+#' @param hybrid Get ability data from paper-pencil ("paper") or online ("online") test? Only relevant for Check P5 as of 2023.
 #'
 #' @return If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
 #' @export
@@ -19,7 +20,7 @@ get_abil_input_file <- function(check, year, domain,
                                 selection = c("date", "name"),
                                 check_type = substr(toupper(check), 1, 1),
                                 spec_regex = NULL, read_data = TRUE,
-                                avoid.nz = TRUE, avoid.res = TRUE)
+                                avoid.nz = TRUE, avoid.res = TRUE, hybrid = NULL)
 {
   check <- toupper(check)
   year <- as.numeric(year)
@@ -31,6 +32,14 @@ get_abil_input_file <- function(check, year, domain,
   if (! check %in% valid_checks) stop("Check must be one of the following:\n", paste(valid_checks, collapse=", ") )
   if (! check_type %in% c("P", "S")) stop("Only check types P and S are implemented")
   if (! year %in% 2013:2099) stop(year," is not a valid year.")
+  if (is.null(hybrid) & check_type == "P" & year >= 2023) stop("`hybrid` must be specified for P5 Checks in 2023 or later.")
+  if (! hybrid[1] %in% c("paper", "online", "computer")) {
+    stop("`hybrid` must be 'paper' or 'online'")
+  } else {
+    if (hybrid == "computer") hybrid <- "online"
+    if (! (check_type == "P" & year >= 2023)) message("Argument `hybrid` will be ignored because ",check_type," ",year," is not a hybrid check.")
+  }
+  
   valid_domains <- c("dles", "dsif", "dsch",
                      "eles", "ehoe", "esch",
                      "fles", "fhoe", "fsch",
@@ -43,8 +52,12 @@ get_abil_input_file <- function(check, year, domain,
   if (check_type == "P") {
     
     # make path to abils directory
-    subjfolder <- switch(substr(domain, 1, 1), d = "Deutsch", e = "Englisch", f = "Franzoesisch", m = c("Mathematik", "Mathe"), n = "Natw")
-    if (is_schreib) subjfolder <- paste0(subjfolder, "_Schreiben")
+    if (check == "P5" & as.numeric(year) >= 2023) { # no subjectfolders for hybrid P5-checks, so subjectfolder==domain
+      subjfolder <- ifelse(substr(domain,1,1)=="m", "math", domain)
+    } else {
+      subjfolder <- switch(substr(domain, 1, 1), d = "Deutsch", e = "Englisch", f = "Franzoesisch", m = c("Mathematik", "Mathe"), n = "Natw")
+      if (is_schreib) subjfolder <- paste0(subjfolder, "_Schreiben")
+    }
     dirpath <- paste0(srvpath,"IBE_Projekte/Checks/Checks_",year,"/Check_",check,"/Auswertung/",subjfolder,"/Daten")
     if (length(dirpath) > 1) dirpath[which(sapply(dirpath, dir.exists))]
     
@@ -55,6 +68,8 @@ get_abil_input_file <- function(check, year, domain,
         file_rx <- paste0("((P|p)",substr(check,2,2),"_",domain,"|",domain,"_(P|p)",substr(check,2,2),")_",year,"_TAM")
       } else {
         file_rx <- paste0(domain,"_(P|p)",substr(check,2,2),"_","[[:digit:]]{2}",year_short,"_abils")
+        if (year >= 2023 & hybrid == "paper") file_rx <- sub("abils", "?(paper)_abils", file_rx) # select paper vs online abils input file for hybrid P5-checks
+        if (year >= 2023 & hybrid == "online") file_rx <- sub("abils", "ABILS", file_rx)
       }
     } else file_rx <- spec_regex
     
