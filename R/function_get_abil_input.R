@@ -32,8 +32,8 @@ get_abil_input_file <- function(check, year, domain,
   if (! check %in% valid_checks) stop("Check must be one of the following:\n", paste(valid_checks, collapse=", ") )
   if (! check_type %in% c("P", "S")) stop("Only check types P and S are implemented")
   if (! year %in% 2013:2099) stop(year," is not a valid year.")
-  if (is.null(hybrid) & check_type == "P" & year >= 2023 & !grepl("sch", domain)) {
-    stop("`hybrid` must be specified for P5 Checks in 2023 or later.")
+  if (is.null(hybrid)) {
+    if (check_type == "P" & year >= 2023 & !grepl("sch", domain)) stop("`hybrid` must be specified for P5 Checks in 2023 or later.")
   } else {
     if (! hybrid[1] %in% c("paper", "online", "computer")) {
       stop("`hybrid` must be 'paper' or 'online'")
