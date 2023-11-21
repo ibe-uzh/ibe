@@ -39,7 +39,7 @@ get_abil_input_file <- function(check, year, domain,
       stop("`hybrid` must be 'paper' or 'online'")
     } else {
       if (hybrid == "computer") hybrid <- "online"
-      if (! (check_type == "P" & year >= 2023)) message("Argument `hybrid` will be ignored because ",check_type," ",year," is not a hybrid check.")
+      if (! (check == "P5" & year >= 2023)) message("Argument `hybrid` will be ignored because ",check_type," ",year," is not a hybrid check.")
     }
   }
     
