@@ -71,8 +71,8 @@ get_abil_input_file <- function(check, year, domain,
         file_rx <- paste0("((P|p)",substr(check,2,2),"_",domain,"|",domain,"_(P|p)",substr(check,2,2),")_",year,"_TAM")
       } else {
         file_rx <- paste0(domain,"_(P|p)",substr(check,2,2),"_","[[:digit:]]{2}",year_short,"_abils")
-        if (year >= 2023 & hybrid == "paper" & avoid.res) file_rx <- sub("abils", "?(paper)_abils", file_rx) # select paper vs online abils input file for hybrid P5-checks
-        if (year >= 2023 & hybrid == "online") file_rx <- sub("abils", "ABILS", file_rx)
+        if (check=="P5" & year >= 2023 & hybrid == "paper" & avoid.res) file_rx <- sub("abils", "?(paper)_abils", file_rx) # select paper vs online abils input file for hybrid P5-checks
+        if (check=="P5" & year >= 2023 & hybrid == "online") file_rx <- sub("abils", "ABILS", file_rx)
       }
     } else file_rx <- spec_regex
     
