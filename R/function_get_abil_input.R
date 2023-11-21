@@ -33,13 +33,20 @@ get_abil_input_file <- function(check, year, domain,
   if (! check_type %in% c("P", "S")) stop("Only check types P and S are implemented")
   if (! year %in% 2013:2099) stop(year," is not a valid year.")
   if (is.null(hybrid)) {
-    if (check == "P5" & year >= 2023 & !grepl("sch", domain)) stop("`hybrid` must be specified for P5 Checks in 2023 or later.")
+    if (check == "P5" & year >= 2023 & !grepl("sch", domain)) {
+      stop("`hybrid` must be specified for P5 Checks in 2023 or later.")
+    } else {
+      hybrid <- NA_character_
+    }
   } else {
     if (! hybrid[1] %in% c("paper", "online", "computer")) {
       stop("`hybrid` must be 'paper' or 'online'")
     } else {
       if (hybrid == "computer") hybrid <- "online"
-      if (! (check == "P5" & year >= 2023)) message("Argument `hybrid` will be ignored because ",check_type," ",year," is not a hybrid check.")
+      if (! (check == "P5" & year >= 2023)) {
+        message("Argument `hybrid` will be ignored because ",check_type," ",year," is not a hybrid check.")
+        hybrid <- NA_character_
+      }
     }
   }
     
