@@ -4,18 +4,22 @@
 \alias{plot_ICC}
 \title{Plot Item Characteristic Curve(s)}
 \usage{
-plot_ICC(diff, disc, xlim = -5:5)
+plot_ICC(b, a, xlim = -5:5)
 }
 \arguments{
-\item{diff}{Difficulty Parameter}
+\item{b}{biculty parameter}
 
-\item{disc}{Discrimination Parameter}
+\item{a}{discrimination parameter}
 
-\item{xlim}{Theta display range}
+\item{xlim}{theta display range, defaults to -5 to 5}
 }
 \value{
 ggplot object
 }
 \description{
 Plot Item Characteristic Curve(s)
+}
+\examples{
+plot_ICC(rep(-1:1, 2), rep(1:2, each=3))
+
 }

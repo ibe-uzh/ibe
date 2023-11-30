@@ -10,10 +10,12 @@
 #' @param avoid.nz Avoids Nachzügler files by excluding file names that contain "NZ"
 #'
 #' @return If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
-#' @export
-#'
+#' 
 #' @examples
-
+#' get_abil_output_file("P3", 2021, "mzuv", read_data = FALSE)
+#' head(get_abil_output_file("P3", 2021, "mzuv"))
+#' 
+#' @export
 get_abil_output_file <- function(check, year, domain,
                                  selection = c("date", "name"),
                                  check_type = substr(toupper(check), 1, 1),

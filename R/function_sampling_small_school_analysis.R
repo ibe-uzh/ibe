@@ -7,9 +7,8 @@
 #'
 #' @import dplyr
 #' @return Table with number of schools to sample and info on undersampling of very small schools
+#' 
 #' @export
-#'
-#' @examples
 ssa <- function(df, enrVar, tcs, n) {
 
   frame <- df %>%

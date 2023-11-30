@@ -4,12 +4,12 @@
 \alias{plot_IIC}
 \title{Plot Item Information Curve(s)}
 \usage{
-plot_IIC(diff, disc, xlim = -5:5)
+plot_IIC(b, a, xlim = -5:5)
 }
 \arguments{
-\item{diff}{Difficulty Parameter}
+\item{b}{difficulty parameter}
 
-\item{disc}{Discrimination Parameter}
+\item{a}{discrimination parameter}
 
 \item{xlim}{Theta display range}
 }
@@ -18,4 +18,8 @@ ggplot object
 }
 \description{
 Plot Item Information Curve(s)
+}
+\examples{
+plot_IIC(-1:1, c(.5, 1, 1.5))
+
 }

@@ -5,10 +5,11 @@
 #' @param sep Separator between the original input `x` and the checksum that is appended.
 #'
 #' @return A character string pasted from the original input `x`, the separator `sep`, and the checksum.
-#' @export
 #'
 #' @examples
-
+#' sapply(c(2, 6, 13, 17), function(nziff) make_luhn(substring("01-999-88-777-666", 1, nziff)))
+#' 
+#' @export
 make_luhn <- function(x, HID=TRUE, sep=ifelse(HID, "-0", "")) {
   makel <- function(x1) {
     if (is.na(x1)) return(NA_character_)

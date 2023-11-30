@@ -1,24 +1,27 @@
 #' Plot Item Characteristic Curve(s)
 #'
-#' @param diff Difficulty Parameter
-#' @param disc Discrimination Parameter
-#' @param xlim Theta display range
+#' @param b biculty parameter
+#' @param a discrimination parameter
+#' @param xlim theta display range, defaults to -5 to 5
 #'
 #' @return ggplot object
+#' 
 #' @import dplyr
 #' @import scales
 #' @import ggplot2
 #' @import purrr
-#' @export
 #'
 #' @examples
-plot_ICC <- function(diff, disc, xlim = -5:5) {
+#' plot_ICC(rep(-1:1, 2), rep(1:2, each=3))
+#' 
+#' @export
+plot_ICC <- function(b, a, xlim = -5:5) {
   
-  if(length(diff) != length(disc)) stop("parameter vectors do not have identical length!")
+  if(length(b) != length(a)) stop("parameter vectors do not have identical length!")
   
   pars <- data.frame(
-    diff = diff,
-    disc = disc
+    b = b,
+    a = a
   )
   
   gg_colors <- scales::hue_pal()(nrow(pars))
@@ -26,9 +29,9 @@ plot_ICC <- function(diff, disc, xlim = -5:5) {
   plot <- ggplot(data.frame(x = xlim)) +
     aes(x) +
     map(1:nrow(pars),
-        ~ stat_function(fun = function (x) (exp(pars$disc[.x]*(x - pars$diff[.x])))/(1 + exp(pars$disc[.x]*(x - pars$diff[.x]))), color = gg_colors[.x])) +
+        ~ stat_function(fun = function (x) (exp(pars$a[.x]*(x - pars$b[.x])))/(1 + exp(pars$a[.x]*(x - pars$b[.x]))), color = gg_colors[.x])) +
     map(1:nrow(pars),
-        ~ geom_segment(aes(x = pars$diff[.x], y = 0.5, xend = pars$diff[.x], yend = 0), linetype = "dashed", color = gg_colors[.x], size = 0.1)
+        ~ geom_segment(aes(x = pars$b[.x], y = 0.5, xend = pars$b[.x], yend = 0), linetype = "dashed", color = gg_colors[.x], size = 0.1)
     ) +
     scale_y_continuous(name = 'P', limits = c(0,1)) +
     scale_x_continuous(name = 'theta', limits = c(min(xlim), max(xlim)))

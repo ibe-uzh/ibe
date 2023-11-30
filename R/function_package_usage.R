@@ -28,7 +28,6 @@
 #' @name package_usage
 #' 
 #' @export
-
 package_usage <- function(scriptfile, extensive=FALSE) {
   
   script <- readLines(con = scriptfile)

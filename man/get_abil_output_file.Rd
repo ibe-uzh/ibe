@@ -38,3 +38,8 @@ If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the 
 \description{
 Get ability-output files (input into TAM script) from IBE server
 }
+\examples{
+get_abil_output_file("P3", 2021, "mzuv", read_data = FALSE)
+head(get_abil_output_file("P3", 2021, "mzuv"))
+
+}

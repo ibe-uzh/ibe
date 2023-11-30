@@ -12,9 +12,8 @@
 #' @import dplyr
 #' @import stringr
 #' @import rlang
-#' @export
 #'
-#' @examples
+#' @export
 nra_cells <- function(df, nResp = 15, nra.sep, nra.sort, respVar, respValue, clustVar) {
 
   # unquoted grouping variables

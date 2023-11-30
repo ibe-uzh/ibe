@@ -1,7 +1,7 @@
 #' Plot Item Information Curve(s)
 #'
-#' @param diff Difficulty Parameter
-#' @param disc Discrimination Parameter
+#' @param b difficulty parameter
+#' @param a discrimination parameter
 #' @param xlim Theta display range
 #'
 #' @return ggplot object
@@ -10,23 +10,25 @@
 #' @import ggplot2
 #' @import purrr
 #' @import Deriv
-#' @export
 #'
 #' @examples
-plot_IIC <- function(diff, disc, xlim = -5:5) {
+#' plot_IIC(-1:1, c(.5, 1, 1.5))
+#' 
+#' @export
+plot_IIC <- function(b, a, xlim = -5:5) {
   
-  if(length(diff) != length(disc)) stop("parameter vectors do not have identical length!")
+  if(length(b) != length(a)) stop("parameter vectors do not have identical length!")
   
   pars <- data.frame(
-    diff = diff,
-    disc = disc
+    b = b,
+    a = a
   )
   
   # apply function to each row of dataframe with parameters
-  icc <- function(disc, diff) {
-    function(x) (exp(disc*(x - diff)))/(1 + exp(disc*(x - diff)))
+  icc <- function(a, b) {
+    function(x) (exp(a*(x - b)))/(1 + exp(a*(x - b)))
   }
-  icc_list <- pmap(pars, function(disc, diff) icc(disc, diff))
+  icc_list <- pmap(pars, function(a, b) icc(a, b))
   
   # apply Deriv to each function in list
   info_list <- map(icc_list, Deriv::Deriv, "x")
@@ -42,14 +44,12 @@ plot_IIC <- function(diff, disc, xlim = -5:5) {
   
   gg_colors <- scales::hue_pal()(nrow(pars))
   
-  plot <- ggplot(data.frame(x = xlim)) +
+  ggplot(data.frame(x = xlim)) +
     aes(x) +
     map2(info_list, gg_colors, ~ stat_function(fun = .x, color = .y)) +
     map(1:nrow(pars), ~ geom_segment(aes(x = xmax[.x], y = 0, xend = xmax[.x], yend = ymax[.x]), linetype = "dashed", color = gg_colors[.x], size = 0.1)) +
     scale_y_continuous(name = 'info') +
     scale_x_continuous(name = 'theta', limits = c(min(xlim), max(xlim)))
-  
-  return(plot)
   
 }
 

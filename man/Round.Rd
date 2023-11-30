@@ -15,5 +15,11 @@ Round(x, digits = 0)
 A vector of numbers rounded to the indicated decimal places
 }
 \description{
-Conventional rounding
+Rs `round` function rounds to the nearest even number, so that 1.5 becomes 2 but 0.5 becomes 0. In contrast, `Round` always rounds .5 upwards.
+}
+\examples{
+a <- seq(-3, 3, by = .5)
+round(a)
+Round(a)
+
 }

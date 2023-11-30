@@ -19,3 +19,7 @@ A character string pasted from the original input `x`, the separator `sep`, and 
 \description{
 Make Luhn checksums as needed for HIDs (including scan-IDs)
 }
+\examples{
+sapply(c(2, 6, 13, 17), function(nziff) make_luhn(substring("01-999-88-777-666", 1, nziff)))
+
+}

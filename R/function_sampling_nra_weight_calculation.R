@@ -19,9 +19,8 @@
 #'
 #' @return Inout data frame with additional column nraWeightVar containing adjusted weights
 #' @import dplyr
+#' 
 #' @export
-#'
-#' @examples
 nra_weights <- function(df, cellVar, weightVar, nraWeightVar, statusVar, nonRespValue, respValue) {
 
   # get data frame and rename variables

@@ -44,3 +44,8 @@ If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the 
 \description{
 Get ability-input files (input into TAM script) from IBE server
 }
+\examples{
+get_abil_input_file("S2", 2022, "dles", read_data = FALSE)
+head(get_abil_input_file("S2", 2022, "dles"))
+
+}

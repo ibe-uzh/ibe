@@ -11,9 +11,8 @@
 #'
 #' @return The same list of data frames but colums that appear in several of them are coerced to the same type. 
 #' The order of columns may still differ between data frames. The list can be submitted to `dplyr::bind_rows()`.
+#' 
 #' @export
-#'
-
 unify_coltypes <- function(df.list, verbose = TRUE) {
   if (!is.list(df.list)) stop("df.list must be a list of data frames!")
   if (!all(sapply(df.list), is.data.frame)) stop("df.list must be a list of data frames!")

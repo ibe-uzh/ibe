@@ -10,9 +10,8 @@
 #' @return Input data frame is completed with columns containing sampling information. Selected schools are flagged by sc_smp_selected.
 #' @import dplyr
 #' @import stringr
+#' 
 #' @export
-#'
-#' @examples
 sample_PPS <- function(df, enrVar, tcs, n, undersampling = FALSE, idStart = 1) {
   
   frame <- df %>%

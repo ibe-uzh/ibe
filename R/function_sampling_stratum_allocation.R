@@ -8,9 +8,8 @@
 #'
 #' @return List with 3 vectors: proportional allocations, neyman allocations and the corresponding ratios of both methods
 #' @import dplyr
+#' 
 #' @export
-#'
-#' @examples
 strata_allocation <- function(df, n, stratVar, enrVar, varVec) {
   
   # get df and rename variables

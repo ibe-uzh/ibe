@@ -12,10 +12,12 @@
 #' @param hybrid Get ability data from paper-pencil ("paper") or online ("online") test? Only relevant for Check P5 as of 2023.
 #'
 #' @return If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
-#' @export
 #'
 #' @examples
-
+#' get_abil_input_file("S2", 2022, "dles", read_data = FALSE)
+#' head(get_abil_input_file("S2", 2022, "dles"))
+#'
+#' @export
 get_abil_input_file <- function(check, year, domain,
                                 selection = c("date", "name"),
                                 check_type = substr(toupper(check), 1, 1),
