@@ -7,7 +7,11 @@
 #' @param stop.when.unknown Logical, whether to stop with an error when one or several values of x are invalid. If `FALSE` (default), warnings are given for unknown domains or competence areas.
 #'
 #' @return A character vector of the same length as x, potentially including new `NA`s.
-#' 
+#'
+#' @name domain_name_matrix
+NULL
+
+#' @rdname domain_name_matrix
 #' @export 
 domain_name2mx <- function(x, stop.when.unknown = FALSE)
   {
@@ -42,9 +46,10 @@ domain_name2mx <- function(x, stop.when.unknown = FALSE)
   return(y)
 }
 
+#' @rdname domain_name_matrix
 #' @export 
 domain_mx2name <- function(x, stop.when.unknown = FALSE)
-  {
+{
   x <- strsplit(toupper(x),
                 split = ".", fixed = TRUE)
   mx1 <- sapply(x,
