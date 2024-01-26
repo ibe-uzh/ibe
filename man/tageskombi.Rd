@@ -4,7 +4,7 @@
 \alias{tageskombi}
 \title{Makes evenly distributed group assignments for a given number of persons and days. Used for planning double-corrections in writing tests.}
 \usage{
-tageskombi(npers, ntage, maxzeit = 10, seed = 123)
+tageskombi(npers, ntage, maxzeit = 10, seed = 123, raters = NULL)
 }
 \arguments{
 \item{npers}{number of persons (raters)}

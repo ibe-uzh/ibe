@@ -7,9 +7,9 @@
 plot_ICC(b, a, xlim = -5:5)
 }
 \arguments{
-\item{b}{biculty parameter}
+\item{b}{difficulty parameter}
 
-\item{a}{discrimination parameter}
+\item{a}{discrimination (slope) parameter}
 
 \item{xlim}{theta display range, defaults to -5 to 5}
 }

@@ -8,7 +8,7 @@
 #' @return a data frame with `npers` rows, a column `Gruppe` for group assignment (A and B), and `ntage` columns for days
 #' 
 #' @export
-tageskombi <- function(npers, ntage, maxzeit=10, seed=123) {
+tageskombi <- function(npers, ntage, maxzeit=10, seed=123, raters=NULL) {
   grpsize <- floor(npers/2) # wie viele Personen in Gruppe A?
   kombis <- combn(1:npers, grpsize) # alle möglichen Kombinationen für Gruppe A
   minchose <- floor((grpsize*ntage)/npers) # jede Person sollte mindestens wie oft in Gruppe A sein?
@@ -20,12 +20,13 @@ tageskombi <- function(npers, ntage, maxzeit=10, seed=123) {
     set.seed(seed + i)
     gezogen <- kombis[, sample(1:ncol(kombis), ntage)]
     krit_test <- table(gezogen) %in% minchose:maxchose
-    if(Sys.time()-starttime > maxzeit) stop("Keine Lösung innert", maxzeit, "Sekunden gefunden.")
+    if(Sys.time()-starttime > maxzeit) stop("Keine Lösung innert ",maxzeit," Sekunden gefunden.")
     i <- i+1
   }
   cat("\nErgebnis nach", i+1, "Versuchen. Seed =", seed+i, "\n")
   cat("\nHäufigkeit Gruppe A:\n")
   print(table(gezogen))
+  cat("\n")
   A <- data.frame(Gruppe = rep("A", grpsize),
                   as.data.frame(gezogen))
   B <- data.frame(Gruppe = rep("B", npers-grpsize),
@@ -33,5 +34,24 @@ tageskombi <- function(npers, ntage, maxzeit=10, seed=123) {
   
   names(A)[-1] <- paste("Tag", 1:ntage)
   names(B)[-1] <- paste("Tag", 1:ntage)
-  rbind(A, B)
+  out <- rbind(A, B)
+  
+  duos <- combn(1:npers, 2) |>
+    as.data.frame() |>
+    as.list()
+  duos_freq <- vector("integer")
+  for (d in 1:length(duos)) {
+    duos_freq[d] <- apply(A[,-1], 2,
+                          function(x) as.numeric((duos[[d]][1] %in% x) == (duos[[d]][2] %in% x)) ) |>
+      sum()
+  }
+  cat("Häufigkeiten Duos zusammen:\n")
+  print(table(duos_freq))
+  
+  if (!is.null(raters)) {
+    if (length(na.omit(raters)) != npers) stop("Length of raters vector must be npers.")
+    raters <- as.character(na.omit(raters))
+    for (col in setdiff(colnames(out), "Gruppe")) out[[col]] <- sapply(out[[col]], function(x, rs) rs[x], rs = raters)
+  }
+  out
 }
