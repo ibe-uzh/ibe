@@ -40,7 +40,10 @@ df_to_empty_sql <- function(df, conn, table_name) {
   # function that creates the sql create table statement
   create_table_sql <- function(df, table_name) {
     cols <- sapply(df, get_sql_type)
-    col_defs <- paste(names(cols), cols, collapse = ", ")
+    col_names <- names(cols)
+    # Check and add backticks for reserved words
+    col_names <- ifelse(col_names %in% c("check", "index"), paste0("`", col_names, "`"), col_names)
+    col_defs <- paste(col_names, cols, collapse = ", ")
     return(paste("CREATE TABLE", table_name, "(", col_defs, ")", sep=" "))
   }
   
