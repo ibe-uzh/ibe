@@ -1,6 +1,6 @@
-#' Custom functions for itembank interactions
+#' Custom functions for DB interactions
 #' 
-#' `connect_itembank` is a wrapper around `RMariaDB::dbConnect` that includes the host and port needed to access our itembank.
+#' `connect_itembank` and `connect_checkbank` are wrappers around `RMariaDB::dbConnect` that include the host and port needed to access our DBs.
 #' `dbDataTypes` gets the data storage types and - if chosen - the character lengths of each column.
 #' 
 #' @param user The username as a string.
@@ -10,7 +10,7 @@
 #' @param incl_length Logical, whether to include the maximum character length of each column.
 #' @param string_only Logical, whether to filter the output for columns of type `string` only.
 #' 
-#' @return For `connect_itembank`, a database connection object, class `MariaDBConnection`. For `dbDataTypes` a data.frame with one row per column in the database table.
+#' @return For `connect_itembank` and `connect_checkbank`, a database connection object, class `MariaDBConnection`. For `dbDataTypes` a data.frame with one row per column in the database table.
 #' 
 #' @name connect_itembank
 #' @export
@@ -25,6 +25,24 @@ connect_itembank <- function(user, pw = NULL) {
     username = user,
     password = pw, 
     host = "192.168.1.103", 
+    port = 3306
+  )
+}
+
+#' @name connect_itembank
+#' @export
+connect_checkbank <- function(user, pw = NULL) {
+  require(RMariaDB)
+  if (is.null(pw)) {
+    pw <- rstudioapi::askForPassword(paste("Itembase password for", 
+                                           user))
+  }
+  dbConnect(
+    drv = MariaDB(),
+    dbname = "checkauswertung",
+    username = user, 
+    password = pw,
+    host = "192.168.1.103",
     port = 3306
   )
 }
