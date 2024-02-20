@@ -12,6 +12,7 @@
 #' 
 #' @return For `connect_itembank`, a database connection object, class `MariaDBConnection`. For `dbDataTypes` a data.frame with one row per column in the database table.
 #' 
+#' @name connect_itembank
 #' @export
 connect_itembank <- function(user, pw = NULL) {
   require(RMariaDB)
@@ -28,6 +29,7 @@ connect_itembank <- function(user, pw = NULL) {
   )
 }
 
+#' @rdname connect_itembank
 #' @export
 dbDataTypes <- function(con, tab, incl_length = TRUE, string_only = FALSE) {
   require(RMariaDB)

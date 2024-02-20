@@ -2,9 +2,12 @@
 % Please edit documentation in R/function_itembank_interactions.R
 \name{connect_itembank}
 \alias{connect_itembank}
+\alias{dbDataTypes}
 \title{Custom functions for itembank interactions}
 \usage{
 connect_itembank(user, pw = NULL)
+
+dbDataTypes(con, tab, incl_length = TRUE, string_only = FALSE)
 }
 \arguments{
 \item{user}{The username as a string.}
