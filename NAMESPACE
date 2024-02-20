@@ -3,6 +3,8 @@
 export(QPDF)
 export(Round)
 export(changeNames)
+export(connect_itembank)
+export(dbDataTypes)
 export(df_to_empty_sql)
 export(domain_mx2name)
 export(domain_name2mx)
