@@ -1,6 +1,6 @@
 #' Custom functions for DB interactions
 #' 
-#' `connect_itembank` and `connect_checkbank` are wrappers around `RMariaDB::dbConnect` that include the host and port needed to access our DBs.
+#' `connect_itembank`, `connect_checkausw` and `connect_checkdatarev` are wrappers around `RMariaDB::dbConnect` that include the host and port needed to access our DBs.
 #' `dbDataTypes` gets the data storage types and - if chosen - the character lengths of each column.
 #' 
 #' @param user The username as a string.
@@ -31,7 +31,7 @@ connect_itembank <- function(user, pw = NULL) {
 
 #' @name connect_itembank
 #' @export
-connect_checkbank <- function(user, pw = NULL) {
+connect_checkausw <- function(user, pw = NULL) {
   require(RMariaDB)
   if (is.null(pw)) {
     pw <- rstudioapi::askForPassword(paste("Itembase password for", 
@@ -47,7 +47,37 @@ connect_checkbank <- function(user, pw = NULL) {
   )
 }
 
-#' @rdname connect_itembank
+#' @name connect_itembank
+#' @export
+connect_checkdatarev <- function(user, pw = NULL, cert_path = NULL) {
+  require(RMariaDB)
+  if (is.null(pw)) {
+    pw <- rstudioapi::askForPassword(paste("Itembase password for", 
+                                           user))
+  }
+  if (is.null(cert_path)) {
+    trypaths <- c(paste0("C:/Users/",Sys.info()["user"],"/ibedb-prod-ca.pem"),
+                  paste0("C:/Users/",Sys.info()["user"],"/Documents/ibedb-prod-ca.pem"),
+                  paste0("C:/Users/",Sys.info()["user"],"/kDrive/ibedb-prod-ca.pem"),
+                  paste0("C:/Users/",Sys.info()["user"],"/Documents/kDrive/ibedb-prod-ca.pem"))
+    if (any(file.exists(trypaths))) {
+      cert_path <- trypaths[which(file.exists(trypaths))[1]]
+    } else {
+      stop("No SLL certificate file (PEM) found. Please specify path manually or move file to ",paste0("C:/Users/",Sys.info()["user"],"/ibedb-prod-ca.pem"))
+    }
+  }
+  conn <- dbConnect(
+    drv = MariaDB(),
+    dbname = "check_data_revisions",
+    username = user, 
+    password = pw,
+    ssl.ca = cert_path,
+    host = "ibedb-exoscale-a9317092-eb47-4f96-875c-c8641b2337e7.a.aivencloud.com",
+    port = 21699
+  )
+}
+
+#' @name connect_itembank
 #' @export
 dbDataTypes <- function(con, tab, incl_length = TRUE, string_only = FALSE) {
   require(RMariaDB)

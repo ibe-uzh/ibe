@@ -2,13 +2,16 @@
 % Please edit documentation in R/function_itembank_interactions.R
 \name{connect_itembank}
 \alias{connect_itembank}
-\alias{connect_checkbank}
+\alias{connect_checkausw}
+\alias{connect_checkdatarev}
 \alias{dbDataTypes}
 \title{Custom functions for DB interactions}
 \usage{
 connect_itembank(user, pw = NULL)
 
-connect_checkbank(user, pw = NULL)
+connect_checkausw(user, pw = NULL)
+
+connect_checkdatarev(user, pw = NULL, cert_path = NULL)
 
 dbDataTypes(con, tab, incl_length = TRUE, string_only = FALSE)
 }
@@ -29,6 +32,6 @@ dbDataTypes(con, tab, incl_length = TRUE, string_only = FALSE)
 For `connect_itembank` and `connect_checkbank`, a database connection object, class `MariaDBConnection`. For `dbDataTypes` a data.frame with one row per column in the database table.
 }
 \description{
-`connect_itembank` and `connect_checkbank` are wrappers around `RMariaDB::dbConnect` that include the host and port needed to access our DBs.
+`connect_itembank`, `connect_checkausw` and `connect_checkdatarev` are wrappers around `RMariaDB::dbConnect` that include the host and port needed to access our DBs.
 `dbDataTypes` gets the data storage types and - if chosen - the character lengths of each column.
 }
