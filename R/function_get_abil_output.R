@@ -20,7 +20,7 @@ get_abil_output_file <- function(check, year, domain,
                                  selection = c("date", "name"),
                                  check_type = substr(toupper(check), 1, 1),
                                  spec_regex = NULL, read_data = TRUE,
-                                 avoid.nz = TRUE)
+                                 avoid.nz = TRUE, kDrive = FALSE)
 {
   check <- toupper(check)
   year <- as.numeric(year)
@@ -38,8 +38,20 @@ get_abil_output_file <- function(check, year, domain,
                      "mzuv", "mgfd", "mfur", "natw")
   if (! domain %in% valid_domains) stop("Domain must be one of the following abbreviations:\n", paste(valid_domains, collapse=", ") )
   
-  # specify server path
-  if (dir.exists("//ibe-srv01/IBE_Projekte")) srvpath <- "//ibe-srv01/" else if (dir.exists("//192.168.1.101/IBE_Projekte")) srvpath <- "//192.168.1.101/"
+  # specify server or kDrive path
+  if (kDrive) {
+    kdrivepath <- paste0("C:/Users/",Sys.info()[["user"]],"/kDrive/Common documents/")
+    if (dir.exists(kdrivepath)) {
+      srvpath <- kdrivepath
+      rm(kdrivepath)
+    } else stop("kDrive directory (",kdrivepath,") not found!")
+  } else {
+    if (dir.exists("//ibe-srv01/IBE_Projekte")) {
+      srvpath <- "//ibe-srv01/"
+    } else if {
+      (dir.exists("//192.168.1.101/IBE_Projekte")) srvpath <- "//192.168.1.101/"
+    } else stop("ibe-srv01 (192.168.1.101) not accessible!")
+  }
   
   if (check_type == "P") {
     
