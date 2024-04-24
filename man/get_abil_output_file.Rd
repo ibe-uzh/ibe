@@ -12,7 +12,8 @@ get_abil_output_file(
   check_type = substr(toupper(check), 1, 1),
   spec_regex = NULL,
   read_data = TRUE,
-  avoid.nz = TRUE
+  avoid.nz = TRUE,
+  kDrive = FALSE
 )
 }
 \arguments{

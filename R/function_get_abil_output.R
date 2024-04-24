@@ -48,8 +48,8 @@ get_abil_output_file <- function(check, year, domain,
   } else {
     if (dir.exists("//ibe-srv01/IBE_Projekte")) {
       srvpath <- "//ibe-srv01/"
-    } else if {
-      (dir.exists("//192.168.1.101/IBE_Projekte")) srvpath <- "//192.168.1.101/"
+    } else if (dir.exists("//192.168.1.101/IBE_Projekte")) {
+      srvpath <- "//192.168.1.101/"
     } else stop("ibe-srv01 (192.168.1.101) not accessible!")
   }
   
