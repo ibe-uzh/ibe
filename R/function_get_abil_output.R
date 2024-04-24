@@ -7,7 +7,8 @@
 #' @param check_type `"P"` for primary school or `"S"` for secondary school, by default consistent with `check`
 #' @param spec_regex The function constructs a regular expression to find the correct file(s). Provide your own regular expression here, to overrule.
 #' @param read_data If TRUE (default), use readRDS and return file content; if FALSE, return file path.
-#' @param avoid.nz Avoids Nachzügler files by excluding file names that contain "NZ"
+#' @param avoid.nz Avoids Nachzügler files by excluding file names that contain "NZ".
+#' @param kDrive Use kDrive path? Defaults to FALSE.
 #'
 #' @return If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
 #' 
@@ -77,11 +78,12 @@ get_abil_output_file <- function(check, year, domain,
   } else if (check_type == "S") {
     
     # make path to abils directory
+    domain2 <- ifelse(substr(domain,1,1)=="m", "math", domain)
     dirpath <- paste0(srvpath,"IBE_Projekte/Checks/Checks_",year,"/Check_S2_S3/Auswertung/Check_",check,"/",domain2,"/Daten")
     
     # make file name regex
     if (is.null(spec_regex)) {
-      if (substring(domain, 1, 1) == "m" & year < 2024) { # slightly different naming scheme when using new abils script
+      if (domain2 == "math" & year < 2024) { # slightly different naming scheme when using new abils script
         file_rx <- paste0("math_(S|s)",substr(check,2,2),"_",year,"_Abils_",domain)
       } else {
         file_rx <- paste0(domain,"_(S|s)",substr(check,2,2),"_",year,"_Abils")

@@ -31,7 +31,9 @@ get_abil_output_file(
 
 \item{read_data}{If TRUE (default), use readRDS and return file content; if FALSE, return file path.}
 
-\item{avoid.nz}{Avoids Nachzügler files by excluding file names that contain "NZ"}
+\item{avoid.nz}{Avoids Nachzügler files by excluding file names that contain "NZ".}
+
+\item{kDrive}{Use kDrive path? Defaults to FALSE.}
 }
 \value{
 If `read_data` is `TRUE`, the content of the Rds-file as a data frame, else the full path to the Rds-file.
