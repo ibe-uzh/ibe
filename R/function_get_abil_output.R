@@ -77,13 +77,12 @@ get_abil_output_file <- function(check, year, domain,
   } else if (check_type == "S") {
     
     # make path to abils directory
-    domain2 <- ifelse(substr(domain,1,1) == "m", "math", domain)
     dirpath <- paste0(srvpath,"IBE_Projekte/Checks/Checks_",year,"/Check_S2_S3/Auswertung/Check_",check,"/",domain2,"/Daten")
     
     # make file name regex
     if (is.null(spec_regex)) {
-      if (domain2 == "math") {
-        file_rx <- paste0(domain2,"_(S|s)",substr(check,2,2),"_",year,"_Abils_",domain)
+      if (substring(domain, 1, 1) == "m" & year < 2024) { # slightly different naming scheme when using new abils script
+        file_rx <- paste0("math_(S|s)",substr(check,2,2),"_",year,"_Abils_",domain)
       } else {
         file_rx <- paste0(domain,"_(S|s)",substr(check,2,2),"_",year,"_Abils")
       }
