@@ -6,7 +6,7 @@
 \usage{
 db_con(
   user,
-  db = c("all", "itembank", "checkauswertung", "mutterdatei", "tracking",
+  db = c("all", "itembank", "datenenigabe", "checkauswertung", "mutterdatei", "tracking",
     "check_data_revisions")
 )
 }
@@ -19,5 +19,5 @@ db_con(
 A connection object of list of connection objects.
 }
 \description{
-Wrapper around RMariaDB::dbConnect to connect to itembank, checkauswertung (sessions / results), and check_data_revisions (mutterdatei). An active SSH tunnel is required!
+Wrapper around RMariaDB::dbConnect to connect to itembank, checkauswertung (sessions / results), dateneingabe, and check_data_revisions (mutterdatei). An active SSH tunnel is required!
 }
