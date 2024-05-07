@@ -24,6 +24,7 @@ db_con <- function(user, db = c("all", "itembank", "dateneingabe", "checkauswert
                        check_data_revisions = "ibedb-exoscale-a9317092-eb47-4f96-875c-c8641b2337e7.a.aivencloud.com")
     portnr = switch(dbi,
                     itembank = 13306,
+                    dateneingabe = 13306,
                     checkauswertung = 13306,
                     check_data_revisions = 21699)
     cons[[dbi]] <- RMariaDB::dbConnect(drv = RMariaDB::MariaDB(),
