@@ -8,7 +8,7 @@
 #' @return A connection object of list of connection objects.
 #' 
 #' @export
-db_con <- function(user, db = c("all", "itembank", "datenenigabe", "checkauswertung", "mutterdatei", "tracking", "check_data_revisions") ) {
+db_con <- function(user, db = c("all", "itembank", "dateneingabe", "checkauswertung", "mutterdatei", "tracking", "check_data_revisions") ) {
   
   db <- match.arg(db, several.ok =  TRUE)
   db[db %in% c("mutterdatei", "tracking")] <- "check_data_revisions"

@@ -6,7 +6,7 @@
 \usage{
 db_con(
   user,
-  db = c("all", "itembank", "datenenigabe", "checkauswertung", "mutterdatei", "tracking",
+  db = c("all", "itembank", "dateneingabe", "checkauswertung", "mutterdatei", "tracking",
     "check_data_revisions")
 )
 }
