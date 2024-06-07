@@ -3,6 +3,7 @@
 export(QPDF)
 export(Round)
 export(changeNames)
+export(check_luhn)
 export(connect_checkausw)
 export(connect_checkdatarev)
 export(connect_itembank)

@@ -2,24 +2,31 @@
 % Please edit documentation in R/function_make_luhn.R
 \name{make_luhn}
 \alias{make_luhn}
-\title{Make Luhn checksums as needed for HIDs (including scan-IDs)}
+\alias{check_luhn}
+\title{Make or check Luhn checksums as needed for HIDs (including scan-IDs)}
 \usage{
 make_luhn(x, HID = TRUE, sep = ifelse(HID, "-0", ""))
+
+check_luhn(x, HID = TRUE)
 }
 \arguments{
-\item{x}{A number or character string of numbers. All characters and special characters are ignored when calculating the check sum but preserved in the output.}
+\item{x}{A number or character string of numbers.}
 
-\item{HID}{Set `TRUE` for HID-formatted output.}
+\item{HID}{Set `TRUE` for HID-formatted input/output.}
 
-\item{sep}{Separator between the original input `x` and the checksum that is appended.}
+\item{sep}{Separator between the original input `x` and the checksum that is appended.
+
+All characters, spaces, and punctuation marks are ignored when calculating or testing the check sum.
+The HID input indicates whether there is a 0 at the position between the actual number and the check sum.}
 }
 \value{
-A character string pasted from the original input `x`, the separator `sep`, and the checksum.
+For `make_luhn`, a character string pasted from the original input `x`, the separator `sep`, and the checksum.
+For `check_luhn`, a logical vector.
 }
 \description{
-Make Luhn checksums as needed for HIDs (including scan-IDs)
+Make or check Luhn checksums as needed for HIDs (including scan-IDs)
 }
 \examples{
-sapply(c(2, 6, 13, 17), function(nziff) make_luhn(substring("01-999-88-777-666", 1, nziff)))
+sapply(c(2, 6, 13, 17), function(s) make_luhn(substring("01-999-88-777-666", 1, s)))
 
 }
