@@ -12,6 +12,13 @@
 #' 
 #' @seealso [duplicated()] which this function wraps.
 #' 
+#' @examples
+#' a <- c(1, 2, 3, 3, 4)
+#' duplicated(a)
+#' duplicated(a, fromLast=TRUE)
+#' duplicated2(a)
+#' 
+#' 
 #' @export
 duplicated2 <- function(x, incomparables = FALSE, ...) {
   duplicated(x, incomparables = incomparables, fromLast = FALSE, ... = ...) |

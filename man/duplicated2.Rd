@@ -22,6 +22,14 @@ The base function `duplicated(x)` returns a logical vector where every duplicate
 \details{
 `duplicated()` has several methods for different types of `x`. These should work identically for `duplicated2()` because it does nothing but pass the arguments.
 }
+\examples{
+a <- c(1, 2, 3, 3, 4)
+duplicated(a)
+duplicated(a, fromLast=TRUE)
+duplicated2(a)
+
+
+}
 \seealso{
 [duplicated()] which this function wraps.
 }
